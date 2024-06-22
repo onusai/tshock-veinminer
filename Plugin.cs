@@ -21,6 +21,7 @@ namespace VeinMiner
 
         public class ConfigData
         {
+            public bool PluginEnabled { get; set; } = true;
             public int SearchLimit { get; set; } = 200;
             public int BreakLimit { get; set; } = 4;
             public int[] TileIds { get; set; } = new int[] { 7, 166, 6, 167, 9, 168, 8, 169, 407, 37, 22,
@@ -44,6 +45,8 @@ namespace VeinMiner
 
         void OnGameLoad(EventArgs e)
         {
+            if (!configData.PluginEnabled) return;
+
             delayThread = new Thread(new ThreadStart(DelayMine));
             delayThread.Start();
 
@@ -55,9 +58,9 @@ namespace VeinMiner
             if (disposing)
             {
                 active = false;
-                delayThread.Join();
+                if (configData.PluginEnabled) delayThread.Join();
                 ServerApi.Hooks.GameInitialize.Deregister(this, OnGameLoad);
-                TShockAPI.GetDataHandlers.TileEdit -= TileEdit;
+                if (configData.PluginEnabled) TShockAPI.GetDataHandlers.TileEdit -= TileEdit;
             }
             base.Dispose(disposing);
         }
