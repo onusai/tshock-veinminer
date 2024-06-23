@@ -32,7 +32,7 @@ namespace VeinMiner
 
         public override string Author => "Onusai";
         public override string Description => "Mine ores with ease";
-        public override string Name => "Vein Miner";
+        public override string Name => "VeinMiner";
         public override Version Version => new Version(1, 0, 0, 0);
 
         public VeinMiner(Main game) : base(game) { }
